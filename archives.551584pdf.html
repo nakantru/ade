@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Reader Viewer</title>
+    <style>
+        /* General Reset and App Layout */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #525659;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Toolbar Styling */
+        .toolbar {
+            background-color: #323639;
+            color: #f1f1f1;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: #f1f1f1;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            text-decoration: none; /* For the anchor tag */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            background-color: #4a4e51;
+        }
+
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            background-color: #1c1e1f;
+            border-radius: 4px;
+            padding: 2px 5px;
+        }
+
+        .zoom-level {
+            font-size: 14px;
+            min-width: 50px;
+            text-align: center;
+            user-select: none;
+        }
+
+        /* Main Workspace: Sidebar + Viewer */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            background-color: #242424;
+            border-right: 1px solid #111;
+            display: flex;
+            flex-direction: column;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.hidden {
+            margin-left: -250px;
+        }
+
+        .sidebar-header {
+            padding: 15px;
+            color: #aaa;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #333;
+        }
+
+        .thumbnail-placeholder {
+            margin: 15px auto;
+            width: 150px;
+            height: 200px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            opacity: 0.5;
+        }
+
+        /* PDF Viewer Area */
+        .viewer {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* The "PDF Page" */
+        .pdf-page-container {
+            transition: transform 0.2s ease;
+            transform-origin: top center;
+        }
+
+        .pdf-page {
+            background-color: white;
+            width: 8.5in;
+            min-height: 11in;
+            padding: 1in;
+            box-sizing: border-box;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            color: #333;
+            line-height: 1.6;
+            outline: none;
+            font-size: 11pt;
+            margin-bottom: 20px;
+            white-space: pre-wrap; /* Keeps formatting when pasting text */
+        }
+
+        /* Placeholder text style */
+        .pdf-page:empty:before {
+            content: "Click here and paste your text...";
+            color: #aaa;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <!-- New Homepage Link -->
+            <a href="https://cje-rce.org/cje-rce/archives/" class="icon-btn" title="Go to Archives">🏠</a>
+            
+            <button class="icon-btn" id="toggle-sidebar" title="Toggle Sidebar">☰</button>
+            <span style="font-size: 15px; font-weight: 500;">document.txt</span>
+        </div>
+
+        <div class="toolbar-group">
+            <span>Page 1 / 1</span>
+            <div class="zoom-controls">
+                <button class="icon-btn" id="zoom-out" title="Zoom Out">−</button>
+                <span class="zoom-level" id="zoom-text">100%</span>
+                <button class="icon-btn" id="zoom-in" title="Zoom In">+</button>
+            </div>
+        </div>
+
+        <div class="toolbar-group">
+            <!-- Added ID for the download logic -->
+            <button class="icon-btn" id="download-btn" title="Download Text">⬇</button>
+            <button class="icon-btn" id="print-btn" title="Print">🖨</button>
+        </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">Thumbnails</div>
+            <div class="thumbnail-placeholder"></div>
+            <div class="thumbnail-placeholder" style="opacity: 0.2;"></div>
+        </div>
+
+        <div class="viewer" id="viewer-container">
+            <div class="pdf-page-container" id="page-container">
+                <div class="pdf-page" id="editable-page" contenteditable="true" spellcheck="false"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // --- Sidebar Logic ---
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggle-sidebar');
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+        });
+
+        // --- Zoom Logic ---
+        let currentZoom = 1.0;
+        const zoomStep = 0.1;
+        const pageContainer = document.getElementById('page-container');
+        const zoomText = document.getElementById('zoom-text');
+        
+        function updateZoom() {
+            pageContainer.style.transform = `scale(${currentZoom})`;
+            zoomText.innerText = `${Math.round(currentZoom * 100)}%`;
+        }
+
+        document.getElementById('zoom-in').addEventListener('click', () => {
+            if (currentZoom < 3.0) {
+                currentZoom += zoomStep;
+                updateZoom();
+            }
+        });
+
+        document.getElementById('zoom-out').addEventListener('click', () => {
+            if (currentZoom > 0.5) {
+                currentZoom -= zoomStep;
+                updateZoom();
+            }
+        });
+
+        // --- Download Logic ---
+        document.getElementById('download-btn').addEventListener('click', () => {
+            const pageText = document.getElementById('editable-page').innerText;
+            
+            // Create a Blob containing the text data
+            const blob = new Blob([pageText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create a temporary link element to trigger the download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'extracted_document.txt'; // The default filename
+            
+            // Append, click, and clean up
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // --- Print Logic (Bonus) ---
+        document.getElementById('print-btn').addEventListener('click', () => {
+            window.print();
+        });
+    </script>
+</body>
+</html>
