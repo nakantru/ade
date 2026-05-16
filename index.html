@@ -38,6 +38,12 @@
         header {
             background-color: #436c8e; 
             color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 900;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         header a {
@@ -97,7 +103,7 @@
         /* Main Content Layout */
         .content-wrapper {
             display: flex;
-            margin-top: 30px;
+            margin-top: 170px; 
             gap: 40px;
             min-height: 600px;
         }
@@ -171,7 +177,7 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            cursor: pointer; /* Makes it clear it's clickable */
+            cursor: pointer;
             user-select: none;
         }
 
@@ -195,11 +201,11 @@
             font-size: 0.75rem;
             color: #666;
             transition: transform 0.2s ease;
-            transform: rotate(180deg); /* Points up when expanded */
+            transform: rotate(180deg);
         }
 
         .article-content {
-            display: block; /* Expanded by default */
+            display: block;
             margin-top: 10px;
         }
 
@@ -287,7 +293,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.5); /* Dimmed background */
+            background-color: rgba(0,0,0,0.5);
         }
 
         .modal-content {
@@ -406,7 +412,7 @@
 
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="close-btn" id="closeLogin">&times;</span>
             
             <div class="modal-breadcrumbs">
                 <a href="https://cje-rce.ca/cje/index.php/cje-rce/issue/view/227" data-i18n="home">Accueil</a> <span>/</span> <span data-i18n="login">Connexion</span>
@@ -580,6 +586,7 @@
                 for (var year = 2024; year >= 2014; year--) {
                     // Loop from month 12 down to 1
                     for (var month = 12; month >= 1; month--) {
+                        
                         html += `
                         <div class="article">
                             <div class="article-header">
@@ -605,14 +612,14 @@
             }
 
             /* --- Attach Events for Dynamic and Modal Items --- */
-            var modal = document.getElementById("loginModal");
-            var span = document.getElementsByClassName("close-btn")[0];
+            var loginModal = document.getElementById("loginModal");
+            var closeLogin = document.getElementById("closeLogin");
             
             // Reusable open modal function
-            function openModal(event) {
+            function openLoginModal(event) {
                 event.preventDefault();
                 event.stopPropagation(); 
-                modal.style.display = "block";
+                loginModal.style.display = "block";
             }
 
             function attachDynamicEvents() {
@@ -634,10 +641,10 @@
                     });
                 });
 
-                // Attach modal to newly generated PDF buttons
+                // Attach login modal to all generated PDF buttons
                 var pdfBtns = document.querySelectorAll(".btn-pdf");
                 pdfBtns.forEach(function(btn) {
-                    btn.onclick = openModal;
+                    btn.onclick = openLoginModal;
                 });
             }
 
@@ -647,18 +654,19 @@
             var authorsBtn = document.getElementById("authorsBtn");
             var librariansBtn = document.getElementById("librariansBtn");
 
-            if (topLoginBtn) topLoginBtn.onclick = openModal;
-            if (awardsBtn) awardsBtn.onclick = openModal;
-            if (authorsBtn) authorsBtn.onclick = openModal;
-            if (librariansBtn) librariansBtn.onclick = openModal;
+            if (topLoginBtn) topLoginBtn.onclick = openLoginModal;
+            if (awardsBtn) awardsBtn.onclick = openLoginModal;
+            if (authorsBtn) authorsBtn.onclick = openLoginModal;
+            if (librariansBtn) librariansBtn.onclick = openLoginModal;
 
-            span.onclick = function() {
-                modal.style.display = "none";
+            // Close logic for the modal
+            closeLogin.onclick = function() {
+                loginModal.style.display = "none";
             }
 
             window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
+                if (event.target == loginModal) {
+                    loginModal.style.display = "none";
                 }
             }
 
