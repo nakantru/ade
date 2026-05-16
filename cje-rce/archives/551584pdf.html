@@ -152,8 +152,8 @@
     <!-- Top Toolbar -->
     <div class="toolbar">
         <div class="toolbar-group">
-            <!-- New Homepage Link -->
-            <a href="https://cje-rce.org/cje-rce/archives/" class="icon-btn" title="Go to Archives">🏠</a>
+            <!-- Updated Homepage Link -->
+            <a href="https://cje-rce.org/archives.html" class="icon-btn" title="Go to Archives">🏠</a>
             
             <button class="icon-btn" id="toggle-sidebar" title="Toggle Sidebar">☰</button>
             <span style="font-size: 15px; font-weight: 500;">document.txt</span>
@@ -169,7 +169,6 @@
         </div>
 
         <div class="toolbar-group">
-            <!-- Added ID for the download logic -->
             <button class="icon-btn" id="download-btn" title="Download Text">⬇</button>
             <button class="icon-btn" id="print-btn" title="Print">🖨</button>
         </div>
@@ -244,7 +243,7 @@
             URL.revokeObjectURL(url);
         });
 
-        // --- Print Logic (Bonus) ---
+        // --- Print Logic ---
         document.getElementById('print-btn').addEventListener('click', () => {
             window.print();
         });
