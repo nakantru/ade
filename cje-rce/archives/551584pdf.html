@@ -80,11 +80,13 @@
         /* Sidebar Styling */
         .sidebar {
             width: 250px;
+            min-width: 250px;
             background-color: #242424;
             border-right: 1px solid #111;
             display: flex;
             flex-direction: column;
             transition: margin-left 0.3s ease;
+            overflow-y: auto; /* Scrollable if many pages */
         }
 
         .sidebar.hidden {
@@ -97,20 +99,49 @@
             font-size: 12px;
             text-transform: uppercase;
             border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            background-color: #242424;
+            z-index: 2;
         }
 
-        .thumbnail-placeholder {
+        /* New Realistic PDF Thumbnails */
+        .thumbnail-wrapper {
             margin: 15px auto;
-            width: 150px;
-            height: 200px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            opacity: 0.5;
-            font-size: 8px;
-            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .thumbnail-page {
+            width: 120px;
+            height: 155px; /* 8.5x11 aspect ratio */
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
             padding: 10px;
             box-sizing: border-box;
             overflow: hidden;
+            border: 2px solid transparent; /* For selection highlight */
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        /* Blue highlight for hover and active page */
+        .thumbnail-wrapper:hover .thumbnail-page, 
+        .thumbnail-wrapper.active .thumbnail-page {
+            border-color: #00a0eb; /* Standard PDF viewer blue */
+            box-shadow: 0 0 0 2px rgba(0, 160, 235, 0.3);
+        }
+
+        .thumbnail-label {
+            margin-top: 6px;
+            color: #aaa;
+            font-size: 11px;
+        }
+
+        .thumbnail-wrapper:hover .thumbnail-label, 
+        .thumbnail-wrapper.active .thumbnail-label {
+            color: #fff;
         }
 
         /* PDF Viewer Area */
@@ -175,11 +206,49 @@
     </div>
 
     <div class="workspace">
+        
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">Thumbnails</div>
-            <div class="thumbnail-placeholder">Writing Responses...</div>
-            <div class="thumbnail-placeholder" style="opacity: 0.3;">To frame this topic...</div>
-            <div class="thumbnail-placeholder" style="opacity: 0.1;">References...</div>
+            
+            <div class="thumbnail-wrapper active" onclick="document.getElementById('viewer-container').scrollTop = 0;">
+                <div class="thumbnail-page">
+                    <div style="font-size: 5px; font-weight: bold; text-align: center; color: #000; margin-bottom: 2px;">Writing Responses to Controversial Topics in EFL</div>
+                    <div style="font-size: 4px; text-align: center; color: #555; margin-bottom: 4px;">Said Al Badri and Richard Broom</div>
+                    <div style="font-size: 3.5px; line-height: 1.5; color: #777; text-align: justify;">
+                        Today's young people will grow up to be the citizens of the future, but what that future holds for them is uncertain. We are quite confident, however, that they will have to make crucial decisions about various issues on which people have different and contradicting views...
+                        <br><br>
+                        To frame this topic properly, it is only logical to begin by clearly defining controversial issues before going on to discuss their place in the classroom...
+                    </div>
+                </div>
+                <div class="thumbnail-label">1</div>
+            </div>
+
+            <div class="thumbnail-wrapper" onclick="document.getElementById('viewer-container').scrollTop = 600;">
+                <div class="thumbnail-page">
+                    <div style="font-size: 3.5px; line-height: 1.5; color: #777; text-align: justify;">
+                        In this age of globalization, this educational divide has become hazier as cultural influences flow multi-directionally through media and the Internet. As the media and advanced communications technology, such as Facebook and Twitter, become more easily accessible, students will be confronted with cultural forces that may conflict with those in their local context.
+                        <br><br>
+                        The effect of changing times is clear; controversial issues are already present in the curriculum. Students come face-to-face with these issues in the syllabus, whether they are explicit or not, therefore teachers should be expected to address them. By looking at such issues from different angles...
+                        <br><br>
+                        Harwood and Hahn (1990) pointed out that the students who participate in discussions of controversial issues often demonstrate more positive political attitudes and higher participation in political activities.
+                    </div>
+                </div>
+                <div class="thumbnail-label">2</div>
+            </div>
+
+            <div class="thumbnail-wrapper" onclick="document.getElementById('viewer-container').scrollTop = 1500;">
+                <div class="thumbnail-page">
+                    <div style="font-size: 5px; font-weight: bold; color: #000; margin-top: 5px; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 3px;">References</div>
+                    <div style="font-size: 3px; line-height: 1.5; color: #777;">
+                        Abu-Hamdan, T., & Khader, F. (2014). Social studies teachers' perceptions on teaching contemporary controversial issues...<br><br>
+                        Ayers, W. (2009). Teaching in and for democracy. Kappa Delta Pi Record, 46(1), 30-33.<br><br>
+                        Crook, K., & Truscott, D. (2007). Controversy in the classroom. In M. Thompson (Ed.), Ethics and law for teachers...<br><br>
+                        Dearden, R. F. (1981). Controversial issues and the curriculum. Journal of Curriculum Studies, 13(1), 37-44.<br><br>
+                        Goldenson, D. R. (1978). An alternative view about the role of the secondary school in political socialization...
+                    </div>
+                </div>
+                <div class="thumbnail-label">3</div>
+            </div>
         </div>
 
         <div class="viewer" id="viewer-container">
@@ -274,6 +343,15 @@
         const toggleBtn = document.getElementById('toggle-sidebar');
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle('hidden');
+        });
+
+        // Highlight active thumbnail on click
+        const thumbnails = document.querySelectorAll('.thumbnail-wrapper');
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                thumbnails.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
 
         // --- Zoom Logic ---
