@@ -230,7 +230,7 @@
         </div>
 
         <div class="viewer" id="viewer-container">
-            <div class="pdf-page-container" id="page-container" contenteditable="true" spellcheck="false">
+            <div class="pdf-page-container" id="page-container">
                 
                 <div class="pdf-page" id="page-1">
                     <h1>Writing Responses to Controversial Topics in EFL</h1>
@@ -394,7 +394,7 @@
             
             // Strip out IDs to prevent HTML validation issues
             clone.removeAttribute('id');
-            // Ensure the clone isn't editable
+            // Ensure the clone isn't editable (even if it was on the parent, safe measure)
             clone.removeAttribute('contenteditable');
 
             // Assemble
