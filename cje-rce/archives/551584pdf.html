@@ -45,7 +45,7 @@
             padding: 5px 8px;
             border-radius: 4px;
             transition: background 0.2s;
-            text-decoration: none; /* For the anchor tag */
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -106,6 +106,11 @@
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.5);
             opacity: 0.5;
+            font-size: 10px;
+            color: #333;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         /* PDF Viewer Area */
@@ -136,27 +141,22 @@
             outline: none;
             font-size: 11pt;
             margin-bottom: 20px;
-            white-space: pre-wrap; /* Keeps formatting when pasting text */
         }
 
-        /* Placeholder text style */
-        .pdf-page:empty:before {
-            content: "Click here and paste your text...";
-            color: #aaa;
-            font-style: italic;
-        }
+        .pdf-page h1 { font-size: 18pt; text-align: center; margin-bottom: 5px; }
+        .pdf-page h2 { font-size: 14pt; text-align: center; font-weight: normal; margin-top: 0; }
+        .pdf-page p { margin-bottom: 15px; text-align: justify; }
+        .pdf-page .references { font-size: 10pt; }
+        
     </style>
 </head>
 <body>
 
-    <!-- Top Toolbar -->
     <div class="toolbar">
         <div class="toolbar-group">
-            <!-- Updated Homepage Link -->
             <a href="https://cje-rce.org/archives.html" class="icon-btn" title="Go to Archives">🏠</a>
-            
             <button class="icon-btn" id="toggle-sidebar" title="Toggle Sidebar">☰</button>
-            <span style="font-size: 15px; font-weight: 500;">document.txt</span>
+            <span style="font-size: 15px; font-weight: 500;">broom_badri2015_CONTROVERSIAL.pdf</span>
         </div>
 
         <div class="toolbar-group">
@@ -174,22 +174,50 @@
         </div>
     </div>
 
-    <!-- Main Workspace -->
     <div class="workspace">
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">Thumbnails</div>
-            <div class="thumbnail-placeholder"></div>
-            <div class="thumbnail-placeholder" style="opacity: 0.2;"></div>
+            <div class="thumbnail-placeholder">Writing Responses...</div>
+            <div class="thumbnail-placeholder" style="opacity: 0.2;">To frame this topic...</div>
         </div>
 
         <div class="viewer" id="viewer-container">
             <div class="pdf-page-container" id="page-container">
-                <div class="pdf-page" id="editable-page" contenteditable="true" spellcheck="false"></div>
+                <div class="pdf-page" id="editable-page" contenteditable="true" spellcheck="false">
+                    
+                    <h1>Writing Responses to Controversial Topics in EFL [cite: 1, 2]</h1>
+                    <h2>Said Al Badri and Richard Broom [cite: 3]</h2>
+                    <p style="text-align: center; font-style: italic;">De revue du site web 4 (2015) 8 [cite: 4]</p>
+                    
+                    <p>Today's young people will grow up to be the citizens of the future, but what that future holds for them is uncertain. [cite: 5] We are quite confident, however, that they will have to make crucial decisions about various issues on which people have different and contradicting views. [cite: 6] In this paper, I will focus on the issue of teaching controversial topics in order to explore the following question: How can teachers best handle controversial issues in the classroom? [cite: 7] Through this article we will define the term controversial issues and justify teaching these often-polarizing topics. [cite: 8] As well, I will discuss some techniques to handle contentious subjects and look at the vital roles teachers play when teaching them. [cite: 9]</p>
+
+                    <p>In examining different approaches, we will discuss how teachers' views can influence their teaching of multi-faceted issues and my perspectives on the role teachers should assume in controversy. [cite: 10] Reflecting on both democratic education and education for global citizenship, we will emphasize the importance of these types of education in teaching about divisive topics in the classroom. [cite: 11] Among benefits of inclusion of controversial topics one might list development of speaking or writing skills, contributing to usage of argumentative structures and reasoning, supporting civil competence, multiculturalism and tolerance towards different opinions, one must nevertheless employ the best class practises to yield these benefits. [cite: 12]</p>
+
+                    <p>To frame this topic properly, it is only logical to begin by clearly defining controversial issues before going on to discuss their place in the classroom. [cite: 14] Controversial issues are "those that have a political, social or personal impact and arouse feeling and/or deal with questions of value or belief" (Oxfam, 2006, p. 2). [cite: 15] These are "issues that deeply divide a society, that generate conflicting explanations and solutions based on alternative value systems, are considered controversial" (Stradling, 1984, as cited in Harwood & Hahn, 1990, p. 2). [cite: 16] Addressing controversial issues, such as child labor, honor killing, sex education, terrorism, and the Arab-Israeli conflict, is usually complicated because they rarely have easy answers and stakeholders often have conflicting opinions and motivations concerning them. [cite: 17] People's different experiences, interests, and values affect how they look at local and global issues. [cite: 18] Therefore, these issues result in dispute and disagreement (Oxfam, 2006). [cite: 19]</p>
+
+                    <p>In contrast to Oxfam's (2006) and Stradling's (1984) definitions, both Crook and Truscott (2007) and Dearden (1981) provide a more holistic definition of controversy; [cite: 20] they argue that controversial issues are not merely those matters that are sensitive, arouse strong feelings, and cause conflicts between people but that "a matter is controversial if contrary views can be held on it without those views being contrary to reason"(Dearden, 1981, p. 38). [cite: 21] In other words, what makes an issue truly controversial is that both views about it are "right" or at least, can be reasoned as right. [cite: 22] Crook and Truscott (2007) suggest, as Dearden (1981) does, that controversy may arise, either from "insufficient facts to settle the issue, or disagreement on the relative value of known facts" (p. 130). [cite: 23] Crook and Truscott (2007) point to the debate between creationism and evolution theory as an example of how inadequate evidence can cause controversy. [cite: 24]</p>
+
+                    <p>Even when the facts are not in dispute, suggest Crook and Truscott (2007), the different interpretation or valuation of those facts can cause controversy. [cite: 25] They propose a scenario where, although all people might agree that many schools need greater funding to promote better education and that a casino could generate significant funds, some people might argue it would be inappropriate to bankroll educational institutions with money from gambling. [cite: 26] This creates a broad context for controversial issues to arise rooted, as they can be, in economics, religion, culture, geography, and time. [cite: 27] They are inescapable and, as such, are part of the world in which future students do and will live. [cite: 28] The next section begins the discussion of why it is important that these issues be addressed, at least in part, within the educational system. [cite: 29]</p>
+
+                    <p>Teachers should put in the time and effort to plan for and facilitate discussions on different controversial issues. [cite: 30] They also need to be clear on the reasons why discussing such topics is a worthwhile endeavour. [cite: 31] While there are many reasons for teaching these complex topics in the classroom, I will only focus on three: they are unavoidable, students need opportunities to explore their own values, and students need opportunities to develop critical thinking skills and respectful communication. [cite: 32] For good or ill, education has a profound influence on peoples' lives; [cite: 33] it can provide students with great opportunities to acquire considerable knowledge of various life issues and form a solid foundation of skills. [cite: 34] However, a nation's educational system can vary greatly depending on its government's political stance. [cite: 35, 37] For example, in an extreme totalitarian regime, schools merely prepare students for standardized tests and sometimes force teachers to follow curricula of received wisdom and false information. [cite: 37] An ideal democratic community, in contrast, develops schools that encourage students to open their minds and think about the whole world around them (Ayers, 2009). [cite: 38]</p>
+
+                    <p>In this age of globalization, this educational divide has become hazier as cultural influences flow multi-directionally through media and the Internet. [cite: 39] As the media and advanced communications technology, such as Facebook and Twitter, become more easily accessible, students will be confronted with cultural forces that may conflict with those in their local context. [cite: 40] As such, education for global citizenship has become a necessity, as students want to know more about worldwide issues and need to be able to think critically about complex global problems. [cite: 41] These different information channels also pose a danger, as they may be one-sided when they deal with contentious topics, emphasizing the need for critical thinking skills. [cite: 42] In response to this, global citizenship education encourages students to explore and understand opposing points of view about polarizing debates. [cite: 43] It also pushes students to reflect on and express their own values and opinions, as well as listen to and respect other people's perspectives. [cite: 44] As a result, they can reflect critically on media information, make informed choices, stand up for their own rights, and develop a sense of responsibility for others (Oxfam, 2006). [cite: 45]</p>
+                    
+                    <p>By asking students to write about socially, politically, or ethically debatable issues, educators can transform a static language exercise into a dynamic practice of critical thinking and persuasion. [cite: 110] Writing about controversy not only motivates learners but also mirrors authentic, real world communication where English is used to navigate complex global dialogues. [cite: 111] Argumentative writing is widely recognized as a fundamental genre in academic settings, demanding that learners thoughtfully consider multiple sides of an issue before formulating a stance. [cite: 112] When EFL students are tasked with writing about controversial issues such as climate change policies, internet censorship, or artificial intelligence ethics, they are pushed far beyond basic descriptive or narrative tasks. [cite: 113] They must evaluate outside sources, synthesize conflicting information, and construct a logical, well supported argument. [cite: 114] This rigorous process helps students acquire what researchers refer to as an argument schema, a mental framework that improves their ability to organize their thoughts, draft a clear thesis, and systematically deploy evidence to refute counterarguments (Reznitskaya et al., 2007). [cite: 115] In doing so, students move from passive language absorption to active, rhetorical engagement, learning not just what to say, but how to effectively persuade an audience. [cite: 116]</p>
+
+                    <h3>References</h3>
+                    <div class="references">
+                        <p>Abu-Hamdan, T., & Khader, F. (2014). Social studies teachers' perceptions on teaching contemporary controversial issues. American International Journal of Contemporary Research, 4(10), 70-78. [cite: 181, 182]</p>
+                        <p>Ayers, W. (2009). Teaching in and for democracy. Kappa Delta Pi Record, 46(1), 30-33. [cite: 183]</p>
+                        <p>Crook, K., & Truscott, D. (2007). Controversy in the classroom. In M. Thompson (Ed.), Ethics and law for teachers (pp. 129-146). Toronto, ON: Thomson Nelson. [cite: 184, 185]</p>
+                        <p>Dearden, R. F. (1981). Controversial issues and the curriculum. Journal of Curriculum Studies, 13(1), 37-44. [cite: 186]</p>
+                        <p>Oxfam. (2006). Global citizenship guides: Teaching controversial issues. Oxford, United Kingdom: Oxfam House. [cite: 202, 203]</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Interactive JavaScript -->
     <script>
         // --- Sidebar Logic ---
         const sidebar = document.getElementById('sidebar');
@@ -234,7 +262,7 @@
             // Create a temporary link element to trigger the download
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'extracted_document.txt'; // The default filename
+            a.download = 'broom_badri2015_CONTROVERSIAL.txt'; 
             
             // Append, click, and clean up
             document.body.appendChild(a);
