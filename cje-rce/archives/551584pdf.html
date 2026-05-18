@@ -79,18 +79,18 @@
 
         /* Sidebar Styling */
         .sidebar {
-            width: 250px;
-            min-width: 250px;
+            width: 200px;
+            min-width: 200px;
             background-color: #242424;
             border-right: 1px solid #111;
             display: flex;
             flex-direction: column;
             transition: margin-left 0.3s ease;
-            overflow-y: auto; /* Scrollable if many pages */
+            overflow-y: auto;
         }
 
         .sidebar.hidden {
-            margin-left: -250px;
+            margin-left: -200px;
         }
 
         .sidebar-header {
@@ -105,7 +105,7 @@
             z-index: 2;
         }
 
-        /* New Realistic PDF Thumbnails */
+        /* Realistic PDF Thumbnails */
         .thumbnail-wrapper {
             margin: 15px auto;
             display: flex;
@@ -115,21 +115,20 @@
         }
 
         .thumbnail-page {
-            width: 120px;
-            height: 155px; /* 8.5x11 aspect ratio */
+            width: 100px;
+            height: 130px; /* 8.5x11 aspect ratio */
             background-color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            padding: 10px;
+            padding: 6px;
             box-sizing: border-box;
             overflow: hidden;
-            border: 2px solid transparent; /* For selection highlight */
+            border: 2px solid transparent;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        /* Blue highlight for hover and active page */
         .thumbnail-wrapper:hover .thumbnail-page, 
         .thumbnail-wrapper.active .thumbnail-page {
-            border-color: #00a0eb; /* Standard PDF viewer blue */
+            border-color: #00a0eb;
             box-shadow: 0 0 0 2px rgba(0, 160, 235, 0.3);
         }
 
@@ -154,10 +153,14 @@
             align-items: flex-start;
         }
 
-        /* The "PDF Page" */
+        /* The "PDF Page" Container */
         .pdf-page-container {
             transition: transform 0.2s ease;
             transform-origin: top center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between pages */
         }
 
         .pdf-page {
@@ -171,14 +174,15 @@
             line-height: 1.6;
             outline: none;
             font-size: 11pt;
-            margin-bottom: 20px;
+            position: relative;
         }
 
+        /* Page Layout Styles */
         .pdf-page h1 { font-size: 18pt; text-align: center; margin-bottom: 5px; }
         .pdf-page h2 { font-size: 14pt; text-align: center; font-weight: normal; margin-top: 0; color: #555; }
-        .pdf-page h3 { font-size: 14pt; margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
         .pdf-page p { margin-bottom: 15px; text-align: justify; }
-        .pdf-page .references p { font-size: 10pt; margin-bottom: 8px; text-indent: -20px; padding-left: 20px; text-align: left; }
+        .pdf-page .page-number { position: absolute; bottom: 0.5in; left: 0; right: 0; text-align: center; font-size: 10pt; color: #777; }
+        .references p { font-size: 10pt; margin-bottom: 8px; text-indent: -20px; padding-left: 20px; text-align: left; }
         
     </style>
 </head>
@@ -188,7 +192,7 @@
         <div class="toolbar-group">
             <a href="https://cje-rce.org/archives.html" class="icon-btn" title="Go to Archives">🏠</a>
             <button class="icon-btn" id="toggle-sidebar" title="Toggle Sidebar">☰</button>
-            <span style="font-size: 15px; font-weight: 500;">broom_badri2015_CONTROVERSIAL.pdf</span>
+            <span style="font-size: 15px; font-weight: 500;">broom+badri2015+CONTROVERSIAL+4(8)1.pdf</span>
         </div>
 
         <div class="toolbar-group">
@@ -209,105 +213,82 @@
         
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">Thumbnails</div>
-            
-            <div class="thumbnail-wrapper active" onclick="document.getElementById('viewer-container').scrollTop = 0;">
-                <div class="thumbnail-page">
-                    <div style="font-size: 5px; font-weight: bold; text-align: center; color: #000; margin-bottom: 2px;">Writing Responses to Controversial Topics in EFL</div>
-                    <div style="font-size: 4px; text-align: center; color: #555; margin-bottom: 4px;">Said Al Badri and Richard Broom</div>
-                    <div style="font-size: 3.5px; line-height: 1.5; color: #777; text-align: justify;">
-                        Today's young people will grow up to be the citizens of the future, but what that future holds for them is uncertain. We are quite confident, however, that they will have to make crucial decisions about various issues on which people have different and contradicting views...
-                        <br><br>
-                        To frame this topic properly, it is only logical to begin by clearly defining controversial issues before going on to discuss their place in the classroom...
-                    </div>
-                </div>
-                <div class="thumbnail-label">1</div>
-            </div>
-
-            <div class="thumbnail-wrapper" onclick="document.getElementById('viewer-container').scrollTop = 600;">
-                <div class="thumbnail-page">
-                    <div style="font-size: 3.5px; line-height: 1.5; color: #777; text-align: justify;">
-                        In this age of globalization, this educational divide has become hazier as cultural influences flow multi-directionally through media and the Internet. As the media and advanced communications technology, such as Facebook and Twitter, become more easily accessible, students will be confronted with cultural forces that may conflict with those in their local context.
-                        <br><br>
-                        The effect of changing times is clear; controversial issues are already present in the curriculum. Students come face-to-face with these issues in the syllabus, whether they are explicit or not, therefore teachers should be expected to address them. By looking at such issues from different angles...
-                        <br><br>
-                        Harwood and Hahn (1990) pointed out that the students who participate in discussions of controversial issues often demonstrate more positive political attitudes and higher participation in political activities.
-                    </div>
-                </div>
-                <div class="thumbnail-label">2</div>
-            </div>
-
-            <div class="thumbnail-wrapper" onclick="document.getElementById('viewer-container').scrollTop = 1500;">
-                <div class="thumbnail-page">
-                    <div style="font-size: 5px; font-weight: bold; color: #000; margin-top: 5px; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 3px;">References</div>
-                    <div style="font-size: 3px; line-height: 1.5; color: #777;">
-                        Abu-Hamdan, T., & Khader, F. (2014). Social studies teachers' perceptions on teaching contemporary controversial issues...<br><br>
-                        Ayers, W. (2009). Teaching in and for democracy. Kappa Delta Pi Record, 46(1), 30-33.<br><br>
-                        Crook, K., & Truscott, D. (2007). Controversy in the classroom. In M. Thompson (Ed.), Ethics and law for teachers...<br><br>
-                        Dearden, R. F. (1981). Controversial issues and the curriculum. Journal of Curriculum Studies, 13(1), 37-44.<br><br>
-                        Goldenson, D. R. (1978). An alternative view about the role of the secondary school in political socialization...
-                    </div>
-                </div>
-                <div class="thumbnail-label">3</div>
-            </div>
+            <div id="thumbnails-container"></div>
         </div>
 
         <div class="viewer" id="viewer-container">
-            <div class="pdf-page-container" id="page-container">
-                <div class="pdf-page" id="editable-page" contenteditable="true" spellcheck="false">
-                    
+            <div class="pdf-page-container" id="page-container" contenteditable="true" spellcheck="false">
+                
+                <div class="pdf-page" id="page-1">
                     <h1>Writing Responses to Controversial Topics in EFL</h1>
                     <h2>Said Al Badri and Richard Broom</h2>
                     <p style="text-align: center; font-style: italic;">De revue du site web 4 (2015) 8</p>
-                    
                     <p>Today's young people will grow up to be the citizens of the future, but what that future holds for them is uncertain. We are quite confident, however, that they will have to make crucial decisions about various issues on which people have different and contradicting views. In this paper, I will focus on the issue of teaching controversial topics in order to explore the following question: How can teachers best handle controversial issues in the classroom? Through this article we will define the term controversial issues and justify teaching these often-polarizing topics. As well, I will discuss some techniques to handle contentious subjects and look at the vital roles teachers play when teaching them. In examining different approaches, we will discuss how teachers' views can influence their teaching of multi-faceted issues and my perspectives on the role teachers should assume in controversy. Reflecting on both democratic education and education for global citizenship, we will emphasize the importance of these types of education in teaching about divisive topics in the classroom. Among benefits of inclusion of controversial topics one might list development of speaking or writing skills, contributing to usage of argumentative structures and reasoning, supporting civil competence, multiculturalism and tolerance towards different opinions, one must nevertheless employ the best class practises to yield these benefits.</p>
+                    <div class="page-number">108</div>
+                </div>
 
+                <div class="pdf-page" id="page-2">
                     <p>To frame this topic properly, it is only logical to begin by clearly defining controversial issues before going on to discuss their place in the classroom. Controversial issues are "those that have a political, social or personal impact and arouse feeling and/or deal with questions of value or belief" (Oxfam, 2006, p. 2). These are "issues that deeply divide a society, that generate conflicting explanations and solutions based on alternative value systems, are considered controversial" (Stradling, 1984, as cited in Harwood & Hahn, 1990, p. 2). Addressing controversial issues, such as child labor, honor killing, sex education, terrorism, and the Arab-Israeli conflict, is usually complicated because they rarely have easy answers and stakeholders often have conflicting opinions and motivations concerning them. People's different experiences, interests, and values affect how they look at local and global issues. Therefore, these issues result in dispute and disagreement (Oxfam, 2006).</p>
-
                     <p>In contrast to Oxfam's (2006) and Stradling's (1984) definitions, both Crook and Truscott (2007) and Dearden (1981) provide a more holistic definition of controversy; they argue that controversial issues are not merely those matters that are sensitive, arouse strong feelings, and cause conflicts between people but that "a matter is controversial if contrary views can be held on it without those views being contrary to reason"(Dearden, 1981, p. 38). In other words, what makes an issue truly controversial is that both views about it are "right" or at least, can be reasoned as right. Crook and Truscott (2007) suggest, as Dearden (1981) does, that controversy may arise, either from "insufficient facts to settle the issue, or disagreement on the relative value of known facts" (p. 130). Crook and Truscott (2007) point to the debate between creationism and evolution theory as an example of how inadequate evidence can cause controversy. Even when the facts are not in dispute, suggest Crook and Truscott (2007), the different interpretation or valuation of those facts can cause controversy. They propose a scenario where, although all people might agree that many schools need greater funding to promote better education and that a casino could generate significant funds, some people might argue it would be inappropriate to bankroll educational institutions with money from gambling. This creates a broad context for controversial issues to arise rooted, as they can be, in economics, religion, culture, geography, and time. They are inescapable and, as such, are part of the world in which future students do and will live. The next section begins the discussion of why it is important that these issues be addressed, at least in part, within the educational system.</p>
+                    <p>Teachers should put in the time and effort to plan for and facilitate discussions on different controversial issues. They also need to be clear on the reasons why discussing such topics is a worthwhile endeavour. While there are many reasons for teaching these complex topics in the classroom, I will only focus on three: they are unavoidable, students need opportunities to explore their own values, and students need opportunities to develop critical thinking skills and respectful communication. For good or ill, education has a profound influence on peoples' lives; it can provide students with great opportunities to acquire considerable knowledge of various life issues and form a solid foundation of skills. However, a nation's educational system can vary greatly depending on its</p>
+                    <div class="page-number">109</div>
+                </div>
 
-                    <p>Teachers should put in the time and effort to plan for and facilitate discussions on different controversial issues. They also need to be clear on the reasons why discussing such topics is a worthwhile endeavour. While there are many reasons for teaching these complex topics in the classroom, I will only focus on three: they are unavoidable, students need opportunities to explore their own values, and students need opportunities to develop critical thinking skills and respectful communication. For good or ill, education has a profound influence on peoples' lives; it can provide students with great opportunities to acquire considerable knowledge of various life issues and form a solid foundation of skills. However, a nation's educational system can vary greatly depending on its government's political stance. For example, in an extreme totalitarian regime, schools merely prepare students for standardized tests and sometimes force teachers to follow curricula of received wisdom and false information. An ideal democratic community, in contrast, develops schools that encourage students to open their minds and think about the whole world around them (Ayers, 2009).</p>
-
+                <div class="pdf-page" id="page-3">
+                    <p>government's political stance. For example, in an extreme totalitarian regime, schools merely prepare students for standardized tests and sometimes force teachers to follow curricula of received wisdom and false information. An ideal democratic community, in contrast, develops schools that encourage students to open their minds and think about the whole world around them (Ayers, 2009).</p>
                     <p>In this age of globalization, this educational divide has become hazier as cultural influences flow multi-directionally through media and the Internet. As the media and advanced communications technology, such as Facebook and Twitter, become more easily accessible, students will be confronted with cultural forces that may conflict with those in their local context. As such, education for global citizenship has become a necessity, as students want to know more about worldwide issues and need to be able to think critically about complex global problems. These different information channels also pose a danger, as they may be one-sided when they deal with contentious topics, emphasizing the need for critical thinking skills. In response to this, global citizenship education encourages students to explore and understand opposing points of view about polarizing debates. It also pushes students to reflect on and express their own values and opinions, as well as listen to and respect other people's perspectives. As a result, they can reflect critically on media information, make informed choices, stand up for their own rights, and develop a sense of responsibility for others (Oxfam, 2006).</p>
+                    <p>The effect of changing times is clear; controversial issues are already present in the curriculum. Students come face-to-face with these issues in the syllabus, whether they are explicit or not, therefore teachers should be expected to address them. By looking at such issues from different angles, students challenge their own beliefs and develop critical thinking skills. In addition, Oxfam (2006) notes that curricula addressing contentious issues can make students aware of the complexity of these types of topics, and the necessity of discussion, in order to learn to co-exist and negotiate with people who have differing views.</p>
+                    <p>Westheimer (2008) emphasizes that in order to solve social problems and improve society, students have to acquire these thinking skills that would allow them to be democratic, politically engaged, and ethical citizens. As students discuss various contentious topics in the classroom, they improve their inquiry, critical thinking and analytical skills. As a result, these students become, what Westheimer (2008) calls, "Social-Justice Oriented Citizens" who "know how to critically assess multiple perspectives" (p. 21). This kind of citizen is "able to examine social, political, and economic structures and explore strategies for change that address root causes of problems" (p. 21) in society.</p>
+                    <p>Harwood and Hahn (1990) pointed out that the students who participate in discussions of controversial issues often demonstrate more positive political attitudes and higher participation in political activities. Similarly, Patrick (1967) found that people who took part in debate in school outperformed their counterparts in measures of political efficacy. Long and Long (1975) indicated that there is a positive relationship between these discussions and students' interest in following current events in the media and discussing political issues with friends and family. When students are provided with the right environment to state their opinions about various contentious subjects, there are usually positive effects on these students' feelings of political interest, efficacy, confidence, and trust (Hahn, Angell, & Tocci, 1988). One can say that discussing controversial issues helps students develop a greater civic tolerance towards contrary points of view. Remy (1972) finds that</p>
+                    <div class="page-number">110</div>
+                </div>
 
-                    <p>The effect of changing times is clear; controversial issues are already present in the curriculum. Students come face-to-face with these issues in the syllabus, whether they are explicit or not, therefore teachers should be expected to address them. By looking at such issues from different angles, students challenge their own beliefs and develop critical thinking skills. In addition, Oxfam (2006) notes that curricula addressing contentious issues can make students aware of the complexity of these types of topics, and the necessity of discussion, in order to learn to co-exist and negotiate with people who have differing views. Westheimer (2008) emphasizes that in order to solve social problems and improve society, students have to acquire these thinking skills that would allow them to be democratic, politically engaged, and ethical citizens. As students discuss various contentious topics in the classroom, they improve their inquiry, critical thinking and analytical skills. As a result, these students become, what Westheimer (2008) calls, "Social-Justice Oriented Citizens" who "know how to critically assess multiple perspectives" (p. 21). This kind of citizen is "able to examine social, political, and economic structures and explore strategies for change that address root causes of problems" (p. 21) in society.</p>
-
-                    <p>Harwood and Hahn (1990) pointed out that the students who participate in discussions of controversial issues often demonstrate more positive political attitudes and higher participation in political activities. Similarly, Patrick (1967) found that people who took part in debate in school outperformed their counterparts in measures of political efficacy. Long and Long (1975) indicated that there is a positive relationship between these discussions and students' interest in following current events in the media and discussing political issues with friends and family. When students are provided with the right environment to state their opinions about various contentious subjects, there are usually positive effects on these students' feelings of political interest, efficacy, confidence, and trust (Hahn, Angell, & Tocci, 1988). One can say that discussing controversial issues helps students develop a greater civic tolerance towards contrary points of view. Remy (1972) finds that students are very keen to attend social studies classes which include discussions about controversial topics.</p>
-
-                    <p>Discussing divisive topics in the classroom creates a constructive environment where students can explore their values and develop their skills. Most ethics, social science, and citizenship curricula emphasize the need for students to discover their values, express their positions on controversial issues, and consider other people's positions (Oxfam, 2006). It is the teacher's key role to raise such topics in the classroom and provide students with the opportunities to learn to make reasoned judgments. Additionally, the teacher must help students develop respect for others' opinions, weigh up different perspectives, participate actively in arguments and debates, and resolve disagreements (Oxfam, 2006). In doing so, teachers can aid students in developing global-citizenship skills. A key element of this kind of educational context is positioning students as equals in their rights and responsibilities as citizens, such as education and employment. This emphasizes questioning as a way to promote intellectual growth, awaken curiosity, and encourage skill development (Ayers, 2009).</p>
-
-                    <p>Ayers (2009) argues that this educational stance, democratic education, facilitates the process of teaching controversial issues in the classroom because it helps students acquire necessary skills to deal with contentious topics. According to Ayers (2009), democratic education helps students develop listening, analytical, enquiry, and critical-thinking skills. It also enables students to grow up as responsible citizens who deliberate with other citizens about local, national, and global issues and how to solve them. Teaching students to deliberate will expose them to the process of inquiry, critical thinking, and analysis. Oxfam (2006) states that discussing controversial topics enables students to develop various thinking skills that require them to: (a) manage pieces of information; (b) justify their opinions and actions; (c) investigate different issues. Students also develop creative thinking skills, which help them come up with a variety of ideas, as well as evaluation skills where they assess various values and actions (Oxfam, 2006).</p>
-
+                <div class="pdf-page" id="page-4">
+                    <p>students are very keen to attend social studies classes which include discussions about controversial topics. Discussing divisive topics in the classroom creates a constructive environment where students can explore their values and develop their skills. Most ethics, social science, and citizenship curricula emphasize the need for students to discover their values, express their positions on controversial issues, and consider other people's positions (Oxfam, 2006). It is the teacher's key role to raise such topics in the classroom and provide students with the opportunities to learn to make reasoned judgments. Additionally, the teacher must help students develop respect for others' opinions, weigh up different perspectives, participate actively in arguments and debates, and resolve disagreements (Oxfam, 2006). In doing so, teachers can aid students in developing global-citizenship skills.</p>
+                    <p>A key element of this kind of educational context is positioning students as equals in their rights and responsibilities as citizens, such as education and employment. This emphasizes questioning as a way to promote intellectual growth, awaken curiosity, and encourage skill development (Ayers, 2009). Ayers (2009) argues that this educational stance, democratic education, facilitates the process of teaching controversial issues in the classroom because it helps students acquire necessary skills to deal with contentious topics. According to Ayers (2009), democratic education helps students develop listening, analytical, enquiry, and critical-thinking skills. It also enables students to grow up as responsible citizens who deliberate with other citizens about local, national, and global issues and how to solve them. Teaching students to deliberate will expose them to the process of inquiry, critical thinking, and analysis. Oxfam (2006) states that discussing controversial topics enables students to develop various thinking skills that require them to: (a) manage pieces of information; (b) justify their opinions and actions; (c) investigate different issues. Students also develop creative thinking skills, which help them come up with a variety of ideas, as well as evaluation skills where they assess various values and actions (Oxfam, 2006).</p>
                     <p>Education for global citizenship adopts a variety of teaching and learning approaches, such as discussion, debate, role-play, ranking exercises, and communities of enquiry. These approaches are essential for handling controversial issues in the classroom as they help students acquire the essential skills and values to discuss and make reasoned judgments on contentious topics. Moreover, education for global citizenship establishes a procedure that enables students to take in fresh information, examine it in depth, and decide on its bias and reliability. In addition, they can combine this new information with their own views, draw their own conclusions, make informed decisions, and take appropriate action (Oxfam, 2006). This educational dynamic is as fragile and volatile as it is important and must be created and maintained carefully. The next section goes into further detail regarding the practices of democratic classroom.</p>
+                    <p>In traditional methods of teaching, teachers tell their students what to think and how to behave about a particular topic based on the teacher's own beliefs and values (Oxfam, 2006). These teaching approaches are not suitable for handling controversial issues because they do not allow students to explore and understand opposing points of view. Furthermore, some traditional curricula deliberately ignore the teaching of debatable issues and do not include such topics in their syllabi (Holden, 2002). Teaching controversial issues in the classroom can bring great benefits to individuals and society as a whole but putting it into practice is an art that requires skill and practice. Therefore, teachers need specific teaching skills in order to avoid serious problems, such as supporting</p>
+                    <div class="page-number">111</div>
+                </div>
 
-                    <p>In traditional methods of teaching, teachers tell their students what to think and how to behave about a particular topic based on the teacher's own beliefs and values (Oxfam, 2006). These teaching approaches are not suitable for handling controversial issues because they do not allow students to explore and understand opposing points of view. Furthermore, some traditional curricula deliberately ignore the teaching of debatable issues and do not include such topics in their syllabi (Holden, 2002). Teaching controversial issues in the classroom can bring great benefits to individuals and society as a whole but putting it into practice is an art that requires skill and practice. Therefore, teachers need specific teaching skills in order to avoid serious problems, such as supporting stereotypes, causing tension between students, and creating confusion (Oxfam, 2006). According to Saskatchewan Teachers' Federation (2000), "the purpose of introducing [controversial] topics is never the indoctrination of students to a particular point of view. It is a professional responsibility of the teacher to present the controversy to students fairly and objectively" (as cited in Crook & Truscott, 2007, p. 143). Thus, teachers need to adopt strategies for addressing complex issues based on their confidence and experience, as well as the students' ages and skills. These strategies can help teachers maintain balance, increase productivity, and avoid bias when discussing any contentious topic (Oxfam, 2006). Oxfam (2006) cautions teachers to be prepared for students' reactions to divisive issues which will likely vary, since their responses are affected by their backgrounds, emotions, and beliefs. This is all the more important since, as stated in the previous section, controversial topics are unavoidable; therefore, teachers have to be prepared to handle them as they may arise unexpectedly (Oxfam, 2006).</p>
-
+                <div class="pdf-page" id="page-5">
+                    <p>stereotypes, causing tension between students, and creating confusion (Oxfam, 2006). According to Saskatchewan Teachers' Federation (2000), "the purpose of introducing [controversial] topics is never the indoctrination of students to a particular point of view. It is a professional responsibility of the teacher to present the controversy to students fairly and objectively" (as cited in Crook & Truscott, 2007, p. 143). Thus, teachers need to adopt strategies for addressing complex issues based on their confidence and experience, as well as the students' ages and skills. These strategies can help teachers maintain balance, increase productivity, and avoid bias when discussing any contentious topic (Oxfam, 2006). Oxfam (2006) cautions teachers to be prepared for students' reactions to divisive issues which will likely vary, since their responses are affected by their backgrounds, emotions, and beliefs. This is all the more important since, as stated in the previous section, controversial topics are unavoidable; therefore, teachers have to be prepared to handle them as they may arise unexpectedly (Oxfam, 2006).</p>
                     <p>Before opening up a discussion on a controversial topic, it is vital to set ground rules for the discussion before problems arise. Such rules establish an open, safe, and respectful environment for students to express their points of view. Teachers should allow only one student to speak at any given time without interruption and ask the other students to listen and "show respect for the views of others" (Oxfam, 2006, p. 6). The language that is used in these discussion is crucial, prejudiced remarks (racist, sexist, or bigoted, for example) cannot be tolerated in any form; the point is to "challenge the ideas not the people" (Oxfam, 2006, p. 6). While teachers should "allow everyone to express his/her view to ensure that everyone is heard and respected, pupils should give reasons why they have a particular view" (Oxfam, 2006, p. 6). Considering how sensitive a particular issue is, it might be a good idea to divide the class into small groups. This will make less-confident students feel more secure to voice their opinion, as they will maintain some degrees of confidentiality (Oxfam, 2006). These are foundational rules for discussion and debate; however, encouraging students to draw up the ground rules for themselves can make them more firmly committed to the activity. Therefore, the class can manage the learning activity independently (Oxfam, 2006).</p>
-
                     <p>When discussing local, national, and international issues and events, teachers foster their students' interests in politics and public matters, while developing better critical thinking, communication, civic, and social skills (Hess, 2004). However, teachers have justifiable concerns in regards to integrating these kinds of discussion into their classrooms. Teachers, when leading these discussions, must judge when, how, and if they should express their own views and opinions (Oxfam, 2006). Making this decision can be challenging and confusing to many teachers as they are not sure whether to reveal their personal views on these issues to their students (Hess, 2005). As well, some teachers argue that there is no place for teaching controversial subjects in the classroom because of the overcrowded curriculum they have to cover (Holden, 2002). Other teachers claim that they have insufficient knowledge and limited confidence to handle controversial issues because they have had inadequate preparation and support in managing such matters in their pre-service teacher-training program (Lynagh, Gilligan, & Handley, 2010). In my review of the literature, I noticed that there is little research that demonstrates the importance of including controversial issues in teachers' pre-service training programs, which may account for teachers' reports of feelings of unpreparedness.</p>
+                    <div class="page-number">112</div>
+                </div>
 
+                <div class="pdf-page" id="page-6">
                     <p>By asking students to write about socially, politically, or ethically debatable issues, educators can transform a static language exercise into a dynamic practice of critical thinking and persuasion. Writing about controversy not only motivates learners but also mirrors authentic, real world communication where English is used to navigate complex global dialogues. Argumentative writing is widely recognized as a fundamental genre in academic settings, demanding that learners thoughtfully consider multiple sides of an issue before formulating a stance. When EFL students are tasked with writing about controversial issues such as climate change policies, internet censorship, or artificial intelligence ethics, they are pushed far beyond basic descriptive or narrative tasks. They must evaluate outside sources, synthesize conflicting information, and construct a logical, well supported argument. This rigorous process helps students acquire what researchers refer to as an argument schema, a mental framework that improves their ability to organize their thoughts, draft a clear thesis, and systematically deploy evidence to refute counterarguments (Reznitskaya et al., 2007). In doing so, students move from passive language absorption to active, rhetorical engagement, learning not just what to say, but how to effectively persuade an audience.</p>
+                    <p>Hess (2004, 2005) has identified four different approaches to show how teachers' views affect their teaching of contentious topics. First, the denial approach is when teachers do not believe an issue to be controversial, since there is a right (read: accepted) answer to it, and therefore indoctrinate</p>
+                    <div class="page-number">113</div>
+                </div>
 
-                    <p>Hess (2004, 2005) has identified four different approaches to show how teachers' views affect their teaching of contentious topics. First, the denial approach is when teachers do not believe an issue to be controversial, since there is a right (read: accepted) answer to it, and therefore indoctrinate students into that answer. Second, the privilege approach is when teachers believe an issue to be controversial, but they think there is a clearly right answer to it, and therefore they teach students to accept their particular perspective. Third, the avoidance approach is when teachers believe an issue to be controversial, have very strong views about it, and therefore believe they cannot teach it without bias or do not want to teach it at all. Finally, the balance approach is when teachers believe an issue to be controversial and teach it without favoring a particular perspective, so that students will be exposed to various positions in an even-handed way.</p>
-
+                <div class="pdf-page" id="page-7">
+                    <p>students into that answer. Second, the privilege approach is when teachers believe an issue to be controversial, but they think there is a clearly right answer to it, and therefore they teach students to accept their particular perspective. Third, the avoidance approach is when teachers believe an issue to be controversial, have very strong views about it, and therefore believe they cannot teach it without bias or do not want to teach it at all. Finally, the balance approach is when teachers believe an issue to be controversial and teach it without favoring a particular perspective, so that students will be exposed to various positions in an even-handed way.</p>
                     <p>Kelly (1986) presents a different framework, describing teachers' perspectives as exclusive neutrality, exclusive partiality, neutral impartiality, and committed impartiality. According to Kelly (1986), where exclusive neutrality prevents teachers from introducing any controversial topic into the curriculum, exclusive partiality encourages them to intentionally endeavor to persuade students into accepting a favored position on the issue. Neutral impartiality requires teachers to allow their students to examine all relevant points of view on an issue and directs them to honor the strongest argument. Committed impartiality, on the other hand, encourages teachers to state their own opinions on contentious topics and then ensure that all competing points of view receive a fair hearing through critical discussion. Kelly (1986) argues that teachers have to express their opinions when discussing contentious topics with their students and suggests that they should take the role of committed impartiality when addressing controversial issues.</p>
-
                     <p>Harwood (1997) inverts Kelly's (1986) position suggesting that the teacher's opinion should only be expressed after class discussion of the issue. He argues that the most appropriate position of a teacher is to avoid propagation of their own viewpoint and to remain committed to keeping the class discussions smooth, open, and unbiased. In addition to this, the teacher's role is to remain objective by facilitating the discussion of all possible ideas and handling the situation academically and professionally without disclosing their own position. However, the teacher can take the role of devil's advocate by adopting provocative and oppositional stances to ensure a fair and equal coverage of all viewpoints. In certain situations, when it is needed to evaluate the shared information and formulate a final opinion, the teacher becomes an advocate by making their point logically and supporting it with valid examples. Mostly, the teacher acts as an impartial chairperson, by facilitating the discussion through pupils' opinions and authentic resources, without stating their own position. After registering every participant's viewpoint, the teacher is expected to close the discussion by declaring their own position, which the students can then examine critically based on the classroom discussion.</p>
+                    <p>There are many activities, such as debate, drama, role-play, and simulation, that can help student to explore controversial issues in the classroom, however, as each approach might target certain skills, values, and attitudes, teachers need to identify the activity's objectives and then choose the most suitable approach. Oxfam (2006) suggests that, for teachers to facilitate the discussion of controversial issues in the classroom, they should utilize certain activity frameworks. Through communities of enquiry students are encouraged to listen to other people's ideas, think about their own views, express these opinions openly, and modify their views in regards to what they hear. Thinking skills activities, such as mysteries, diamond ranking, and the values continuum (also called the happy/sad continuum), can develop students' ability to justify their arguments and organize their ideas. The values continuum activity, specifically, requires students to investigate, critically examine,</p>
+                    <div class="page-number">114</div>
+                </div>
 
-                    <p>There are many activities, such as debate, drama, role-play, and simulation, that can help student to explore controversial issues in the classroom, however, as each approach might target certain skills, values, and attitudes, teachers need to identify the activity's objectives and then choose the most suitable approach. Oxfam (2006) suggests that, for teachers to facilitate the discussion of controversial issues in the classroom, they should utilize certain activity frameworks. Through communities of enquiry students are encouraged to listen to other people's ideas, think about their own views, express these opinions openly, and modify their views in regards to what they hear. Thinking skills activities, such as mysteries, diamond ranking, and the values continuum (also called the happy/sad continuum), can develop students' ability to justify their arguments and organize their ideas. The values continuum activity, specifically, requires students to investigate, critically examine, and justify their own and other people's values and attitudes. Especially important in our multimedia-rich culture, activities that use photos can encourage students to question why and how certain images are used in a specific context. As there is more than one firmly held set of beliefs about any controversial issue, teachers should utilize a range of interesting and engaging interactive activities to explore these issues (Oxfam, 2006). Teachers should be flexible when they choose the activities they use but should have a clear reason for their choice, which should be based on consideration of the topic and the students' ages. They can also discuss these activities, and their own role in them, with the class and encourage students to take part in the development of the activities.</p>
-
+                <div class="pdf-page" id="page-8">
+                    <p>and justify their own and other people's values and attitudes. Especially important in our multimedia-rich culture, activities that use photos can encourage students to question why and how certain images are used in a specific context. As there is more than one firmly held set of beliefs about any controversial issue, teachers should utilize a range of interesting and engaging interactive activities to explore these issues (Oxfam, 2006). Teachers should be flexible when they choose the activities they use but should have a clear reason for their choice, which should be based on consideration of the topic and the students' ages. They can also discuss these activities, and their own role in them, with the class and encourage students to take part in the development of the activities.</p>
                     <p>This section discussed some best practices and conceptual approaches to teaching controversial issues based on the assumption that they are acceptable in the classroom. However, as described previously, there are educational contexts where they are either not yet desired or are just beginning to be discussed. The next section discusses just such an educational environment based on my readings in the literature and my personal experiences. In spite of the vital importance and enormous benefits of teaching contentious topics in schools, Oman, to my knowledge, has not considered including it in its education programs. Working as an English language teacher in both public schools and military institutions in Oman since 2009, I have personally experienced that all Omani schools curricula lack controversial topics that foster a wide range of conflicting opinions.</p>
-
                     <p>A discussion of the implications of teaching controversial issues in Oman must begin with a description of the structure of the Omani government. A sultan, a hereditary role, who is also the prime minister, rules Oman. While the sultan has the authority to choose the deputy prime minister and the ministers of the various ministries in Oman (a top-down appointment), Omani citizens have the right to choose their regional and provincial representatives (a bottom-up election). The citizens discuss their concerns with their regional representatives who bring them to the provincial representatives. Then, these provincial representatives meet with the concerned ministers to discuss these issues. In a ministerial council meeting, these topics are discussed with the deputy prime minister who has the power to bring these matters to the prime minister, the sultan, who makes the final decisions. In Oman, like many democratic countries, there are problems with voter turnout for the election of regional and provincial representatives.</p>
+                    <p>In order to successfully implement the kind of curriculum described in previous sections in Omani classrooms, teachers have to be well prepared. During my bachelor's degree in education at an Omani college, I was never taught or prepared to handle contentious subjects in classrooms. Similarly, I have never been sent to any in-service training programs that help teachers develop the skills, strategies, and approaches needed when addressing these issues. As a teacher graduate from an Omani college specialized in teacher training, I can attest that Omani teachers receive no preparation or training regarding how to address contentious topics in the classroom. As there is no research done on the consequences of this lack of preparation on the Omani teachers, I will draw on my own experience and some related studies to discuss the potential negative impacts of this absence. Abu-Hamdan and Khader (2014) corroborate my personal experiences in that most Omani teachers feel uncertain, anxious, and cautious about having controversial discussions in the classroom. They attribute these feelings to the teachers' "culture, religion, political system, socialization, large class</p>
+                    <div class="page-number">115</div>
+                </div>
 
-                    <p>In order to successfully implement the kind of curriculum described in previous sections in Omani classrooms, teachers have to be well prepared. During my bachelor's degree in education at an Omani college, I was never taught or prepared to handle contentious subjects in classrooms. Similarly, I have never been sent to any in-service training programs that help teachers develop the skills, strategies, and approaches needed when addressing these issues. As a teacher graduate from an Omani college specialized in teacher training, I can attest that Omani teachers receive no preparation or training regarding how to address contentious topics in the classroom. As there is no research done on the consequences of this lack of preparation on the Omani teachers, I will draw on my own experience and some related studies to discuss the potential negative impacts of this absence.</p>
+                <div class="pdf-page" id="page-9">
+                    <p>sizes, government and curriculum mandates, and lack of familiarity with the topic" (Abu-Hamdan & Khader, 2014, p. 76). Omani teachers feel that discussing such topics can interrupt the peace and stability of the school environment. Because of this, many Omani teachers do not address divisive subjects in order to avoid conflicts with school officials, parents, and students. As well, some teachers believe that teaching controversial issues is a very time-consuming job that can make them neglect and be unable to cover the regular curriculum. These feelings are exacerbated by the lack of support and a fear of punishment from the administration (Abu-Hamdan & Khader, 2014). In spite of these potential roadblocks, I personally believe that Omani teachers can and will overcome these difficulties if they receive adequate preparation. If this preparation is added to the already existing pre-service and in-service training programs provided to Omani teachers, these educators could become competent enough to address such issues.</p>
+                    <p>I believe that including controversial topics in the Omani curriculum will help Omani students become like Westheimer's (2008) social-justice oriented citizen; citizens who can think independently and critically analyze various complex social issues, such as hunger and homelessness, critical thinkers who can recognize the necessity of reform in time and struggle towards a better society. Abu-Hamdan and Khader's (2014) study, which was conducted in Jordan, provides recommendations that are compatible with Omani's educational system and, I believe, will allow Oman to enjoy the benefits of teaching controversial issues in the classroom. The following is only a brief summary of the recommendations but will provide the necessary groundwork for future improvements.</p>
+                    <p>A thorough review of social studies teacher education programs is needed in order to make sure that teachers are equipped with the knowledge and instructional strategies needed for teaching controversial issues. Research needs to be conducted concerning the enhancement of strategies and methods of teaching used by social studies teachers. Teacher-training programs should include hands-on pedagogical practices applicable to teaching controversy in the classroom and be provided</p>
+                    <div class="page-number">116</div>
+                </div>
 
-                    <p>Abu-Hamdan and Khader (2014) corroborate my personal experiences in that most Omani teachers feel uncertain, anxious, and cautious about having controversial discussions in the classroom. They attribute these feelings to the teachers' "culture, religion, political system, socialization, large class sizes, government and curriculum mandates, and lack of familiarity with the topic" (Abu-Hamdan & Khader, 2014, p. 76). Omani teachers feel that discussing such topics can interrupt the peace and stability of the school environment. Because of this, many Omani teachers do not address divisive subjects in order to avoid conflicts with school officials, parents, and students. As well, some teachers believe that teaching controversial issues is a very time-consuming job that can make them neglect and be unable to cover the regular curriculum. These feelings are exacerbated by the lack of support and a fear of punishment from the administration (Abu-Hamdan & Khader, 2014).</p>
-
-                    <p>In spite of these potential roadblocks, I personally believe that Omani teachers can and will overcome these difficulties if they receive adequate preparation. If this preparation is added to the already existing pre-service and in-service training programs provided to Omani teachers, these educators could become competent enough to address such issues. I believe that including controversial topics in the Omani curriculum will help Omani students become like Westheimer's (2008) social-justice oriented citizen; citizens who can think independently and critically analyze various complex social issues, such as hunger and homelessness, critical thinkers who can recognize the necessity of reform in time and struggle towards a better society.</p>
-
-                    <p>Abu-Hamdan and Khader's (2014) study, which was conducted in Jordan, provides recommendations that are compatible with Omani's educational system and, I believe, will allow Oman to enjoy the benefits of teaching controversial issues in the classroom. The following is only a brief summary of the recommendations but will provide the necessary groundwork for future improvements. A thorough review of social studies teacher education programs is needed in order to make sure that teachers are equipped with the knowledge and instructional strategies needed for teaching controversial issues. Research needs to be conducted concerning the enhancement of strategies and methods of teaching used by social studies teachers. Teacher-training programs should include hands-on pedagogical practices applicable to teaching controversy in the classroom and be provided.</p>
-
-                    <h3>References</h3>
+                <div class="pdf-page" id="page-10">
+                    <h2 style="text-align: left; margin-bottom: 20px;">References</h2>
                     <div class="references">
                         <p>Abu-Hamdan, T., & Khader, F. (2014). Social studies teachers' perceptions on teaching contemporary controversial issues. American International Journal of Contemporary Research, 4(10), 70-78.</p>
                         <p>Ayers, W. (2009). Teaching in and for democracy. Kappa Delta Pi Record, 46(1), 30-33.</p>
@@ -322,7 +303,14 @@
                         <p>Holden, C. (2002). Teaching the tricky bits: Topical, political and controversial issues. Education 3- 13: International Journal of Primary, Elementary and Early Years Education, 30(2), 17-23.</p>
                         <p>Kelly, T. E. (1986). Discussing controversial issues: Four perspectives on the teacher's role. Theory and Research in Social Education, 14(2), 113-138.</p>
                         <p>Long, S., & Long, R. (1975). Controversy in the classroom: Student viewpoint and educational outcome. Teaching Political Science, 2(3), 275-299.</p>
-                        <p>Lynagh, M., Gilligan, C., & Handley, T. (2010). Teaching about, and dealing with, sensitive issues in schools. How confident are pre-service teachers? Asia-Pacific Journal of Health, Sport and Physical Education, 1(3), 5-11.</p>
+                        <p>Lynagh, M., Gilligan, C., & Handley, T. (2010). Teaching about, and dealing with, sensitive issues in schools</p>
+                    </div>
+                    <div class="page-number">117</div>
+                </div>
+
+                <div class="pdf-page" id="page-11">
+                    <div class="references">
+                        <p>How confident are pre-service teachers? Asia-Pacific Journal of Health, Sport and Physical Education, 1(3), 5-11.</p>
                         <p>Oxfam. (2006). Global citizenship guides: Teaching controversial issues. Oxford, United Kingdom: Oxfam House.</p>
                         <p>Patrick, J. J. (1967). Political socialization of American youth: A review of research with implications for secondary school social studies. Retrieved from http://eric.ed.gov/?id=ED010835</p>
                         <p>Qualifications and Curriculum Authority. (1998). Education for Citizenship and the Teaching of Democracy in School (The Crick Report), London: QCA/DfEE.</p>
@@ -331,27 +319,76 @@
                         <p>Reznitskaya, A., Anderson, R. C., & Kuo, L. J. (2007). Teaching and learning argumentation. The Elementary School Journal, 107(5), 449 to 472</p>
                         <p>Stradling, R. (1984). Controversial issues in the classroom. In S. Hill & C. Reid (Eds.), Teaching controversial issues (pp. 1-12). London: Edward Arnold.</p>
                         <p>Westheimer, J. (2008). On the relationship between political and moral engagement. In F. Oser & W. Veugelers (Eds.), Getting involved: Global citizenship development and the sources of moral values (pp.17-30). Rotterdam: Sense.</p>
+                        <p>W. Veugelers (Eds.), Getting involved: Global citizenship development and the sources of moral values (pp.17-30). Rotterdam: Sen</p>
                     </div>
+                    <div class="page-number">118</div>
                 </div>
+
+                <div class="pdf-page" id="page-12">
+                    <p style="text-align: center; margin-top: 2in;">9</p>
+                    <div class="page-number">119</div>
+                </div>
+
+                <div class="pdf-page" id="page-13">
+                    <div class="page-number">120</div>
+                </div>
+
+                <div class="pdf-page" id="page-14">
+                    <div class="page-number">121</div>
+                </div>
+
+                <div class="pdf-page" id="page-15">
+                    <div class="page-number">122</div>
+                </div>
+
+                <div class="pdf-page" id="page-16">
+                    <div class="page-number">123</div>
+                </div>
+
             </div>
         </div>
     </div>
 
     <script>
-        // --- Sidebar Logic ---
+        // --- Sidebar Toggle Logic ---
         const sidebar = document.getElementById('sidebar');
         const toggleBtn = document.getElementById('toggle-sidebar');
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle('hidden');
         });
 
-        // Highlight active thumbnail on click
-        const thumbnails = document.querySelectorAll('.thumbnail-wrapper');
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', function() {
-                thumbnails.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
+        // --- Generate Mini-Page Thumbnails Automatically ---
+        const pages = document.querySelectorAll('.pdf-page');
+        const thumbnailsContainer = document.getElementById('thumbnails-container');
+
+        pages.forEach((page, index) => {
+            const pageNum = index + 1;
+            
+            // Extract a small snippet of text from the page to show on the miniature thumbnail
+            let snippet = page.innerText.substring(0, 150).replace(/\n/g, ' ') + '...';
+            if (page.innerText.trim() === '' || page.innerText.length < 5) snippet = '';
+
+            const wrapper = document.createElement('div');
+            wrapper.className = `thumbnail-wrapper ${pageNum === 1 ? 'active' : ''}`;
+            
+            // Thumbnail styling matching the white page UI
+            wrapper.innerHTML = `
+                <div class="thumbnail-page">
+                    <div style="font-size: 3px; line-height: 1.4; color: #777; text-align: left; word-wrap: break-word;">
+                        ${snippet}
+                    </div>
+                </div>
+                <div class="thumbnail-label">${pageNum}</div>
+            `;
+
+            // Click behavior: scroll to the specific page and highlight thumbnail
+            wrapper.addEventListener('click', () => {
+                document.querySelectorAll('.thumbnail-wrapper').forEach(t => t.classList.remove('active'));
+                wrapper.classList.add('active');
+                page.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
+
+            thumbnailsContainer.appendChild(wrapper);
         });
 
         // --- Zoom Logic ---
@@ -381,18 +418,15 @@
 
         // --- Download Logic ---
         document.getElementById('download-btn').addEventListener('click', () => {
-            const pageText = document.getElementById('editable-page').innerText;
+            const pageText = document.getElementById('page-container').innerText;
             
-            // Create a Blob containing the text data
             const blob = new Blob([pageText], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             
-            // Create a temporary link element to trigger the download
             const a = document.createElement('a');
             a.href = url;
             a.download = 'broom_badri2015_CONTROVERSIAL.txt'; 
             
-            // Append, click, and clean up
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
