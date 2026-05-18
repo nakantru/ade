@@ -105,7 +105,7 @@
             z-index: 2;
         }
 
-        /* Realistic PDF Thumbnails */
+        /* Realistic PDF Thumbnails - Scaled clones */
         .thumbnail-wrapper {
             margin: 15px auto;
             display: flex;
@@ -115,21 +115,34 @@
         }
 
         .thumbnail-page {
-            width: 100px;
-            height: 130px; /* 8.5x11 aspect ratio */
+            width: 102px; /* Approx 12% of 8.5in */
+            height: 131px; /* Approx 12% of 11in */
             background-color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            padding: 6px;
             box-sizing: border-box;
             overflow: hidden;
             border: 2px solid transparent;
             transition: border-color 0.2s, box-shadow 0.2s;
+            position: relative;
         }
 
         .thumbnail-wrapper:hover .thumbnail-page, 
         .thumbnail-wrapper.active .thumbnail-page {
             border-color: #00a0eb;
             box-shadow: 0 0 0 2px rgba(0, 160, 235, 0.3);
+        }
+
+        .thumbnail-scaler {
+            transform-origin: top left;
+            transform: scale(0.115); /* Shrinks the cloned page down perfectly */
+            width: 8.5in;
+            height: 11in;
+            pointer-events: none; /* Stops the mini-page from being clickable */
+        }
+        
+        .thumbnail-scaler .pdf-page {
+            box-shadow: none; /* Strip shadow from mini version */
+            margin-bottom: 0;
         }
 
         .thumbnail-label {
@@ -357,29 +370,44 @@
             sidebar.classList.toggle('hidden');
         });
 
-        // --- Generate Mini-Page Thumbnails Automatically ---
+        // --- Generate Mini-Page Thumbnails Automatically via Cloning ---
         const pages = document.querySelectorAll('.pdf-page');
         const thumbnailsContainer = document.getElementById('thumbnails-container');
 
         pages.forEach((page, index) => {
             const pageNum = index + 1;
             
-            // Extract a small snippet of text from the page to show on the miniature thumbnail
-            let snippet = page.innerText.substring(0, 150).replace(/\n/g, ' ') + '...';
-            if (page.innerText.trim() === '' || page.innerText.length < 5) snippet = '';
-
+            // Container for the whole thumbnail item
             const wrapper = document.createElement('div');
             wrapper.className = `thumbnail-wrapper ${pageNum === 1 ? 'active' : ''}`;
             
-            // Thumbnail styling matching the white page UI
-            wrapper.innerHTML = `
-                <div class="thumbnail-page">
-                    <div style="font-size: 3px; line-height: 1.4; color: #777; text-align: left; word-wrap: break-word;">
-                        ${snippet}
-                    </div>
-                </div>
-                <div class="thumbnail-label">${pageNum}</div>
-            `;
+            // The white box that holds the miniature page
+            const thumbPage = document.createElement('div');
+            thumbPage.className = 'thumbnail-page';
+            
+            // The scaler that shrinks the cloned content
+            const scaler = document.createElement('div');
+            scaler.className = 'thumbnail-scaler';
+            
+            // Deep clone the actual page DOM node
+            const clone = page.cloneNode(true);
+            
+            // Strip out IDs to prevent HTML validation issues
+            clone.removeAttribute('id');
+            // Ensure the clone isn't editable
+            clone.removeAttribute('contenteditable');
+
+            // Assemble
+            scaler.appendChild(clone);
+            thumbPage.appendChild(scaler);
+
+            // Add the page number below the thumbnail
+            const label = document.createElement('div');
+            label.className = 'thumbnail-label';
+            label.innerText = pageNum;
+
+            wrapper.appendChild(thumbPage);
+            wrapper.appendChild(label);
 
             // Click behavior: scroll to the specific page and highlight thumbnail
             wrapper.addEventListener('click', () => {
